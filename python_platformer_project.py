@@ -16,11 +16,23 @@ Player_velocity = 5
 
 #display ---------------------------------------------------
 game_screen = pygame.display.set_mode((Width, Height))
+    #background
+def get_bg(name):
+    image = pygame.image.load(join("borrowed_assets", "Background", name))
+    _, _, width, height  = image.get_rect()
+    tiles = []
 
+    #loop for bg
+    for i in range (Width // width +1):
+        for j in range(Height // height+1):
+            pos = [i*width, j*height]
+            tiles.append(pos)
+    return tiles, name
 
 #main function -------------------------------------------
 def main(window):
     clock =  pygame.time.Clock()
+    background, bg_img = get_bg("Purple.png")
     game_on = True
     while game_on:
         clock.tick(FPS)
