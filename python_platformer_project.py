@@ -9,13 +9,12 @@ from os.path import isfile, join
 pygame.init()
 pygame.display.set_caption("Rheo's Platformer")
 
-Bg_color = (255,255,255)
 Width, Height =  1000, 700
 FPS = 60
 Player_velocity = 5
 
 #display ---------------------------------------------------
-game_screen = pygame.display.set_mode((Width, Height))
+window = pygame.display.set_mode((Width, Height))
     #background
 def get_bg(name):
     image = pygame.image.load(join("borrowed_assets", "Background", name))
@@ -25,9 +24,16 @@ def get_bg(name):
     #loop for bg
     for i in range (Width // width +1):
         for j in range(Height // height+1):
-            pos = [i*width, j*height]
+            pos = (i*width, j*height)
             tiles.append(pos)
-    return tiles, name
+    return tiles, image
+
+#background draw -----------------------------------------
+def draw (window, background, bg_img):
+    for tile in background:
+        window.blit(bg_img, tile)
+
+    pygame.display.update()
 
 #main function -------------------------------------------
 def main(window):
@@ -40,9 +46,10 @@ def main(window):
             if event.type == pygame.QUIT:
                 game_on = False
                 break
-    
+        
+        draw(window, background, bg_img)
     pygame.quit()
     quit()
 
 if __name__ == "__main__":
-    main(game_screen)
+    main(window)
