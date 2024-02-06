@@ -15,6 +15,15 @@ Player_velocity = 5
 
 #display ---------------------------------------------------
 window = pygame.display.set_mode((Width, Height))
+   
+#player sprite
+class Player(pygame.sprite.Sprite):
+    Color = (255, 0, 0)
+    def __init__(self,x,y, width,height):
+        self.rect = pygame.Rect(self,x,y, width,height)
+
+   
+   
     #background
 def get_bg(name):
     image = pygame.image.load(join("borrowed_assets", "Background", name))
