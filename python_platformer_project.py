@@ -17,13 +17,13 @@ Player_velocity = 5
 window = pygame.display.set_mode((Width, Height))
 
 # image flipper so that we don't need 2 seperate sprites
-def flip(sprites)
+def flip(sprites):
     return [pygame.transform.flip(sprite, True, False) for sprite in sprites]
 
 #sprite image loader
-def load_sprite_sheet(dir1, dir2, width, height, direction = False):
-    path = join('borrowed assets', dir1, dir2)
-    images = [f for f in listdir(path) if isfile(join(path,f))] 
+def load_sprite_sheets(dir1, dir2, width, height, direction=False):
+    path = join('borrowed_assets', dir1, dir2)
+    images = [f for f in listdir(path) if isfile(join(path, f))] 
 
     all_sprites = {}
 
@@ -49,7 +49,7 @@ def load_sprite_sheet(dir1, dir2, width, height, direction = False):
 class Player(pygame.sprite.Sprite):
     Color = (255, 0, 0)
     Gravity = 1
-    Sprites = load_sprite_sheet('MainCharacters', 'PinkMan', 32, 32, True)
+    Sprites = load_sprite_sheets("MainCharacters", "MaskDude", 32, 32, True)
 
     #player init
     def __init__(self,x,y, width,height):
@@ -57,7 +57,7 @@ class Player(pygame.sprite.Sprite):
         self.x_vel = 0
         self.y_vel = 0
         self.mask = None
-        self.direction = 'left'
+        self.direction = "left"
         self.animation_count = 0
         self.fall_count = 0
 
@@ -79,13 +79,15 @@ class Player(pygame.sprite.Sprite):
             self.animation_count = 0
     
     def loop(self, fps):
-        self.y_vel += min(1,(self.fall_count/fps)*self.Gravity)
+        #self.y_vel += min(1,(self.fall_count/fps)*self.Gravity)
         self.move(self.x_vel, self.y_vel)
 
 
         self.fall_count += 1
+
     def draw(self, win):
-        pygame.draw.rect(win, self.Color, self.rect)
+       self.sprite =  self.Sprites["idle_"+self.direction][0]
+       win.blit(self.Sprites,(self.rect.x, self.rect.y))
 
     #background
 def get_bg(name):
